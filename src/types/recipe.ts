@@ -9,11 +9,13 @@ export interface Recipe {
   steps: string[];
   userName: string;
   createdAt: string;
-  imageUrl?: string;        // Tarif görseli
-  videoUrl?: string;        // Tarif videosu
-  userId?: string;          // Firebase user ID
-  likes?: number;           // Beğeni sayısı
-  views?: number;           // Görüntülenme sayısı
+  imageUrl?: string;
+  videoUrl?: string;
+  userId?: string;
+  likes?: number;
+  views?: number;
+  category?: string;          // Kategori
+  isFavorite?: boolean;       // Favori işareti
 }
 
 /**
@@ -36,3 +38,20 @@ export interface UploadProgress {
   url?: string;
   error?: string;
 }
+
+/**
+ * Recipe categories
+ */
+export const RECIPE_CATEGORIES = [
+  'Tümü',
+  'Ana Yemek',
+  'Çorba',
+  'Salata',
+  'Tatlı',
+  'Aperatif',
+  'İçecek',
+  'Kahvaltılık',
+  'Diğer'
+] as const;
+
+export type RecipeCategory = typeof RECIPE_CATEGORIES[number];

@@ -1,6 +1,7 @@
 import { Recipe } from '../types/recipe';
 
 const STORAGE_KEY = 'recipes';
+const FAVORITES_KEY = 'favorites';
 
 /**
  * Get all recipes from localStorage
@@ -62,7 +63,7 @@ export const updateRecipe = (id: string, updatedRecipe: Recipe): void => {
         const recipes = getRecipes();
         const index = recipes.findIndex(recipe => recipe.id === id);
         if (index !== -1) {
-            recipes[index] = updatedRecipe;
+            recipes[index] = { ...updatedRecipe, id }; // Preserve ID
             localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
         }
     } catch (error) {
@@ -128,4 +129,78 @@ export const downloadRecipesAsFile = (): void => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+};
+
+/**
+ * Get favorite recipe IDs
+ */
+export const getFavorites = (): string[] => {
+    try {
+        const favoritesJson = localStorage.getItem(FAVORITES_KEY);
+        if (!favoritesJson) {
+            return [];
+        }
+        return JSON.parse(favoritesJson) as string[];
+    } catch (error) {
+        console.error('Error reading favorites:', error);
+        return [];
+    }
+};
+
+/**
+ * Toggle favorite status
+ */
+export const toggleFavorite = (id: string): boolean => {
+    try {
+        const favorites = getFavorites();
+        const index = favorites.indexOf(id);
+
+        if (index > -1) {
+            favorites.splice(index, 1);
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            return false;
+        } else {
+            favorites.push(id);
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            return true;
+        }
+    } catch (error) {
+        console.error('Error toggling favorite:', error);
+        return false;
+    }
+};
+
+/**
+ * Check if recipe is favorite
+ */
+export const isFavorite = (id: string): boolean => {
+    const favorites = getFavorites();
+    return favorites.includes(id);
+};
+
+/**
+ * Search recipes by query
+ */
+export const searchRecipes = (query: string): Recipe[] => {
+    const recipes = getRecipes();
+    const searchLower = query.toLowerCase();
+
+    return recipes.filter(recipe =>
+        recipe.title.toLowerCase().includes(searchLower) ||
+        recipe.description.toLowerCase().includes(searchLower) ||
+        recipe.ingredients.some(ing => ing.toLowerCase().includes(searchLower)) ||
+        recipe.userName.toLowerCase().includes(searchLower)
+    );
+};
+
+/**
+ * Filter recipes by category
+ */
+export const filterByCategory = (category: string): Recipe[] => {
+    if (category === 'Tümü') {
+        return getRecipes();
+    }
+
+    const recipes = getRecipes();
+    return recipes.filter(recipe => recipe.category === category);
 };

@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import AddRecipePage from './pages/AddRecipePage';
+import EditRecipePage from './pages/EditRecipePage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
 import VideosPage from './pages/VideosPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
@@ -18,6 +19,7 @@ function AppContent() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/ekle" element={<AddRecipePage />} />
+                    <Route path="/duzenle/:id" element={<EditRecipePage />} />
                     <Route path="/tarif/:id" element={<RecipeDetailPage />} />
                     <Route path="/videolar" element={<VideosPage />} />
                     <Route path="/gizlilik-politikasi" element={<PrivacyPolicyPage />} />

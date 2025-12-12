@@ -1,27 +1,30 @@
 import { useState } from 'react';
-import { Recipe, RecipeFormData } from '../types/recipe';
+import { Recipe, RecipeFormData, RECIPE_CATEGORIES } from '../types/recipe';
 import MediaUpload from './MediaUpload';
 
 interface RecipeFormProps {
     onSubmit: (recipe: Recipe) => void;
+    initialData?: Recipe;
+    isEdit?: boolean;
 }
 
-export default function RecipeForm({ onSubmit }: RecipeFormProps) {
+export default function RecipeForm({ onSubmit, initialData, isEdit = false }: RecipeFormProps) {
     const [formData, setFormData] = useState<RecipeFormData>({
-        title: '',
-        description: '',
-        ingredients: '',
-        steps: '',
-        userName: ''
+        title: initialData?.title || '',
+        description: initialData?.description || '',
+        ingredients: initialData?.ingredients.join(', ') || '',
+        steps: initialData?.steps.join('\n') || '',
+        userName: initialData?.userName || ''
     });
 
     const [comment, setComment] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [videoUrl, setVideoUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
+    const [videoUrl, setVideoUrl] = useState(initialData?.videoUrl || '');
+    const [category, setCategory] = useState(initialData?.category || 'Ana Yemek');
     const [errors, setErrors] = useState<Partial<RecipeFormData>>({});
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -53,7 +56,7 @@ export default function RecipeForm({ onSubmit }: RecipeFormProps) {
             : formData.description.trim();
 
         const recipe: Recipe = {
-            id: Date.now().toString(),
+            id: initialData?.id || Date.now().toString(),
             title: formData.title.trim(),
             description: combinedDescription,
             ingredients: formData.ingredients
@@ -65,20 +68,24 @@ export default function RecipeForm({ onSubmit }: RecipeFormProps) {
                 .map(s => s.trim())
                 .filter(s => s.length > 0),
             userName: formData.userName.trim(),
-            createdAt: new Date().toISOString(),
+            createdAt: initialData?.createdAt || new Date().toISOString(),
             imageUrl: imageUrl || undefined,
             videoUrl: videoUrl || undefined,
-            likes: 0,
-            views: 0
+            category: category,
+            likes: initialData?.likes || 0,
+            views: initialData?.views || 0
         };
 
         onSubmit(recipe);
 
-        // Reset form
-        setFormData({ title: '', description: '', ingredients: '', steps: '', userName: '' });
-        setComment('');
-        setImageUrl('');
-        setVideoUrl('');
+        if (!isEdit) {
+            // Reset form only for new recipes
+            setFormData({ title: '', description: '', ingredients: '', steps: '', userName: '' });
+            setComment('');
+            setImageUrl('');
+            setVideoUrl('');
+            setCategory('Ana Yemek');
+        }
     };
 
     return (
@@ -116,6 +123,22 @@ export default function RecipeForm({ onSubmit }: RecipeFormProps) {
             </div>
 
             <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                    Kategori
+                </label>
+                <select
+                    id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-gray-500"
+                >
+                    {RECIPE_CATEGORIES.filter(cat => cat !== 'Tümü').map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </select>
+            </div>
+
+            <div>
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                     Açıklama
                 </label>
@@ -131,21 +154,23 @@ export default function RecipeForm({ onSubmit }: RecipeFormProps) {
                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
             </div>
 
-            <div>
-                <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
-                    Kendi Yorumum <span className="text-gray-500 font-normal">(opsiyonel)</span>
-                </label>
-                <textarea
-                    id="comment"
-                    name="comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-gray-500 resize-none"
-                    placeholder="Bu tarif hakkındaki kişisel yorumunuz..."
-                    rows={2}
-                />
-                <p className="mt-1 text-xs text-gray-500">Yorumunuz adınızla birlikte açıklamaya eklenecek</p>
-            </div>
+            {!isEdit && (
+                <div>
+                    <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
+                        Kendi Yorumum <span className="text-gray-500 font-normal">(opsiyonel)</span>
+                    </label>
+                    <textarea
+                        id="comment"
+                        name="comment"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-gray-500 resize-none"
+                        placeholder="Bu tarif hakkındaki kişisel yorumunuz..."
+                        rows={2}
+                    />
+                    <p className="mt-1 text-xs text-gray-500">Yorumunuz adınızla birlikte açıklamaya eklenecek</p>
+                </div>
+            )}
 
             {/* Media Upload Component */}
             <MediaUpload
@@ -191,7 +216,7 @@ export default function RecipeForm({ onSubmit }: RecipeFormProps) {
                 type="submit"
                 className="w-full bg-gray-900 text-white py-2 px-4 rounded text-sm hover:bg-gray-700"
             >
-                Tarif Ekle
+                {isEdit ? 'Tarifi Güncelle' : 'Tarif Ekle'}
             </button>
         </form>
     );
