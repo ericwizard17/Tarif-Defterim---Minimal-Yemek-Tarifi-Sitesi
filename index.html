@@ -7,48 +7,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
-  <meta name="title" content="Tarif Defterim - Yemek Tarifleri" />
+  <meta name="title" content="Lezzet Dünyası - Ev Yapımı Tarifler" />
   <meta name="description"
     content="En lezzetli yemek tariflerini keşfedin ve kendi tariflerinizi paylaşın. Ücretsiz tarif defteri." />
   <meta name="keywords" content="yemek tarifleri, tarif defteri, kolay tarifler, pratik yemekler" />
   <meta name="robots" content="index, follow" />
   <meta name="language" content="Turkish" />
-  <meta name="author" content="Tarif Defterim" />
+  <meta name="author" content="Lezzet Dünyası" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tarifdefterim.com/" />
-  <meta property="og:title" content="Tarif Defterim - Yemek Tarifleri" />
+  <meta property="og:url" content="https://lezzetdunyasi.com/" />
+  <meta property="og:title" content="Lezzet Dünyası - Ev Yapımı Tarifler" />
   <meta property="og:description" content="En lezzetli yemek tariflerini keşfedin ve kendi tariflerinizi paylaşın." />
-  <meta property="og:image" content="https://tarifdefterim.com/og-image.jpg" />
+  <meta property="og:image" content="https://lezzetdunyasi.com/og-image.jpg" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://tarifdefterim.com/" />
-  <meta property="twitter:title" content="Tarif Defterim - Yemek Tarifleri" />
+  <meta property="twitter:url" content="https://lezzetdunyasi.com/" />
+  <meta property="twitter:title" content="Lezzet Dünyası - Ev Yapımı Tarifler" />
   <meta property="twitter:description"
     content="En lezzetli yemek tariflerini keşfedin ve kendi tariflerinizi paylaşın." />
-  <meta property="twitter:image" content="https://tarifdefterim.com/og-image.jpg" />
+  <meta property="twitter:image" content="https://lezzetdunyasi.com/og-image.jpg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Google Analytics - Replace with your GA4 ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <!-- Google Analytics - GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DEMO123456"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-DEMO123456');
   </script>
 
-  <title>Tarif Defterim - Yemek Tarifleri</title>
+  <title>Lezzet Dünyası - Ev Yapımı Tarifler</title>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Sample Recipes Import (Development Only) -->
+  <script type="module">
+    // Uncomment to import sample recipes on first load
+    // import { importSampleRecipes } from './src/data/sampleRecipes.ts';
+    // if (!localStorage.getItem('recipes')) {
+    //   importSampleRecipes();
+    // }
+  </script>
 </body>
 
 </html>
