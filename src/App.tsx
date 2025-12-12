@@ -4,6 +4,7 @@ import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import AddRecipePage from './pages/AddRecipePage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
+import VideosPage from './pages/VideosPage';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                             <Route path="/" element={<HomePage />} />
                             <Route path="/ekle" element={<AddRecipePage />} />
                             <Route path="/tarif/:id" element={<RecipeDetailPage />} />
+                            <Route path="/videolar" element={<VideosPage />} />
                         </Routes>
                     </main>
                     <footer className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-8 mt-16">

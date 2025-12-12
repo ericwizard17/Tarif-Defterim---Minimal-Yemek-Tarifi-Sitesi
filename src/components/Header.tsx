@@ -14,7 +14,7 @@ export default function Header() {
                             </svg>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold gradient-text">
+                            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent">
                                 Lezzet Dünyası
                             </h1>
                             <p className="text-xs text-gray-500">Ev Yapımı Tarifler</p>
@@ -30,6 +30,15 @@ export default function Header() {
                                 }`}
                         >
                             🏠 Ana Sayfa
+                        </Link>
+                        <Link
+                            to="/videolar"
+                            className={`px-4 py-2 rounded-full font-medium transition-all ${location.pathname === '/videolar'
+                                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md'
+                                    : 'text-gray-700 hover:bg-orange-50'
+                                }`}
+                        >
+                            🎥 Videolar
                         </Link>
                         <Link
                             to="/ekle"
