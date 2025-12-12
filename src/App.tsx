@@ -9,7 +9,7 @@ function App() {
     return (
         <HelmetProvider>
             <BrowserRouter>
-                <div className="min-h-screen bg-white flex flex-col">
+                <div className="min-h-screen flex flex-col">
                     <Header />
                     <main className="flex-1">
                         <Routes>
@@ -18,10 +18,11 @@ function App() {
                             <Route path="/tarif/:id" element={<RecipeDetailPage />} />
                         </Routes>
                     </main>
-                    <footer className="bg-white border-t border-gray-300 mt-auto py-4">
-                        <div className="max-w-5xl mx-auto px-4 text-center">
-                            <p className="text-xs text-gray-500">
-                                © 2024 Tarif Defterim - Tüm hakları saklıdır
+                    <footer className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-8 mt-16">
+                        <div className="max-w-7xl mx-auto px-4 text-center">
+                            <p className="text-lg font-semibold mb-2">🍳 Lezzet Dünyası</p>
+                            <p className="text-sm opacity-90">
+                                © 2024 Tüm hakları saklıdır - Ev yapımı tariflerle mutfağınızda lezzet şöleni
                             </p>
                         </div>
                     </footer>

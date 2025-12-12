@@ -55,70 +55,66 @@ export default function HomePage() {
     return (
         <>
             <SEO
-                title="Yemek Tarifleri - Ana Sayfa"
-                description={`${recipes.length} adet lezzetli yemek tarifi. Kolay ve pratik tarifler, tatlı tarifleri ve daha fazlası.`}
-                keywords="yemek tarifleri, kolay tarifler, pratik yemekler, tatlı tarifleri, ana yemek"
+                title="Lezzet Dünyası - Ev Yapımı Tarifler"
+                description={`${recipes.length}+ lezzetli ev yapımı tarif. Kolay ve pratik tarifler, tatlı tarifleri ve daha fazlası.`}
+                keywords="yemek tarifleri, kolay tarifler, pratik yemekler, tatlı tarifleri, ana yemek, ev yapımı"
             />
 
-            <div className="max-w-5xl mx-auto px-4 py-8">
-                <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-semibold text-gray-900">Tarifler</h1>
-                    <div className="flex gap-2">
+            {/* Hero Section */}
+            <div className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white py-16">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <h1 className="text-5xl font-bold mb-4">🍳 Lezzet Dünyası'na Hoş Geldiniz!</h1>
+                    <p className="text-xl opacity-90 mb-8">Ev yapımı tariflerle mutfağınızda lezzet şöleni yaşayın</p>
+                    <div className="flex gap-4 justify-center">
+                        <Link to="/ekle" className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105">
+                            ➕ Tarif Ekle
+                        </Link>
                         <button
                             onClick={() => setShowImport(!showImport)}
-                            className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-50"
+                            className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
                         >
-                            İçe Aktar
+                            📥 İçe Aktar
                         </button>
-                        {recipes.length > 0 && (
-                            <button
-                                onClick={downloadRecipesAsFile}
-                                className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-50"
-                            >
-                                Dışa Aktar
-                            </button>
-                        )}
-                        <Link
-                            to="/ekle"
-                            className="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-700"
-                        >
-                            Yeni Tarif
-                        </Link>
                     </div>
                 </div>
+            </div>
 
+            <div className="max-w-7xl mx-auto px-4 py-12">
+                {/* Import Section */}
                 {showImport && (
-                    <div className="mb-6 bg-white border border-gray-300 rounded p-4">
-                        <h2 className="text-sm font-medium text-gray-900 mb-3">Tarifler İçe Aktar</h2>
-                        <div className="space-y-3">
+                    <div className="mb-8 bg-white rounded-2xl shadow-xl p-6 border-2 border-orange-200">
+                        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span className="text-2xl">📥</span> Tarifler İçe Aktar
+                        </h2>
+                        <div className="space-y-4">
                             <div>
-                                <label className="block text-sm text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     JSON Dosyası Yükle:
                                 </label>
                                 <input
                                     type="file"
                                     accept=".json"
                                     onChange={handleFileImport}
-                                    className="text-sm text-gray-600"
+                                    className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
                                     veya JSON Verisi Yapıştır:
                                 </label>
                                 <textarea
                                     value={importData}
                                     onChange={(e) => setImportData(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-gray-500 resize-none font-mono"
+                                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 resize-none font-mono text-sm"
                                     rows={6}
                                     placeholder='[{"id":"...","title":"...","description":"..."}]'
                                 />
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-3">
                                 <button
                                     onClick={handleImport}
                                     disabled={!importData.trim()}
-                                    className="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-700 disabled:bg-gray-300"
+                                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     İçe Aktar
                                 </button>
@@ -127,7 +123,7 @@ export default function HomePage() {
                                         setShowImport(false);
                                         setImportData('');
                                     }}
-                                    className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-50"
+                                    className="btn-secondary"
                                 >
                                     İptal
                                 </button>
@@ -136,18 +132,39 @@ export default function HomePage() {
                     </div>
                 )}
 
+                {/* Stats and Export */}
+                {recipes.length > 0 && (
+                    <div className="flex justify-between items-center mb-8">
+                        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full shadow-lg">
+                            <span className="font-bold text-lg">📚 {recipes.length} Tarif</span>
+                        </div>
+                        <button
+                            onClick={downloadRecipesAsFile}
+                            className="bg-white border-2 border-orange-200 text-orange-600 px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Dışa Aktar
+                        </button>
+                    </div>
+                )}
+
+                {/* Empty State */}
                 {recipes.length === 0 ? (
-                    <div className="text-center py-16 border border-gray-300 rounded">
-                        <p className="text-gray-600 mb-4">Henüz tarif eklenmemiş</p>
+                    <div className="text-center py-20 bg-white rounded-2xl shadow-xl border-2 border-dashed border-orange-200">
+                        <div className="text-6xl mb-4">🍽️</div>
+                        <h3 className="text-2xl font-bold text-gray-800 mb-2">Henüz tarif eklenmemiş</h3>
+                        <p className="text-gray-600 mb-6">İlk lezzetli tarifinizi ekleyerek başlayın!</p>
                         <Link
                             to="/ekle"
-                            className="inline-block bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-700"
+                            className="inline-block btn-primary"
                         >
-                            İlk Tarifi Ekle
+                            ➕ İlk Tarifi Ekle
                         </Link>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {recipes.map(recipe => (
                             <RecipeCard
                                 key={recipe.id}
